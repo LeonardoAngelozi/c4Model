@@ -1,0 +1,43 @@
+@startuml
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Container.puml
+
+
+SHOW_PERSON_OUTLINE()
+
+
+Person(rh, "RH da Empresa", "Responsável por analisar currículos e entrar em contato com os interessados")
+
+Person(profissional, "Profissional", "Responsável por cadastrar e editar as informações existentes em seu currículo no sistema;")
+
+
+System_Boundary(sistemaCadastroCurriculo, "Sistema de Cadastro de Currículo"){
+
+    Container(spa, "Single Page Application", "Angular", "Aplicação WEB para cadastro e análise de currículo")
+
+    Container(api, "API Restful", "Spring Boot/JAVA ", "Responsável por manter os currículos cadastrados")
+
+    ContainerDb(db, "Banco de Dados", "postgres", "Armazena os currículos")
+
+}
+
+
+System_Ext(envioMensagensExterno, "Sistema de Envio de Mensagens", "Enviar mensagens como sms, e-mail ou whatsapp")
+
+
+Rel(spa, api, "Envio e consulta dos currículos", "HTTP/JSON")
+
+Rel_R(api, db, "Faz escrita e leitura", "JDBC")
+
+Rel_R(api, envioMensagensExterno, "Enviar as mensagens utilizando", "HTTP")
+
+
+Rel(rh, spa, "Analisa os currículos e entra em contado utilizando")
+
+Rel_R(profissional, spa, "Cadastra e altera seu currículo utilizando")
+
+
+Rel_U(envioMensagensExterno, profissional, "Envia sms, whatapp ou e-mail para")
+
+
+
+@enduml

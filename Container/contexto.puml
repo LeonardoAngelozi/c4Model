@@ -1,0 +1,18 @@
+@startuml exemploAula
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Container.puml
+
+SHOW_PERSON_OUTLINE()
+
+Person(rh, "RH da Empresa", "Responsável por analisar currículos e entrar em contato com os interessados")
+Person(profissional, "Profissional", "Responsável por cadastrar e editar as informações existentes em seu currículo no sistema;")
+
+System(sistemaCadastroCurriculo, "Sistema de Cadastro de Currículo", "Aplicação WEB no qual usuários podem cadastrar seus currículos de forma online, permitindo que o RH das empresas, visualize/analise e entre em contato.")
+System_Ext(envioMensagensExterno, "Sistema de Envio de Mensagens", "Enviar mensagens como sms, e-mail ou whatsapp")
+
+Rel(rh, sistemaCadastroCurriculo, "Analisa os currículos e entra em contado utilizando")
+Rel(profissional, sistemaCadastroCurriculo, "Cadastra e altera seu currículo utilizando")
+
+Rel_R(sistemaCadastroCurriculo, envioMensagensExterno, "Envia sms, whatapp ou e-mail para o profissional utilizando")
+Rel_U(envioMensagensExterno, profissional, "Envia sms, whatapp ou e-mail")
+
+@enduml
